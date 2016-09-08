@@ -1,0 +1,19 @@
+Main page logging, register userName, play button == 1h
+Insert name and highscore into database =1h
+map coordinates of everything that player sees = 1h
+Player has 3 chances/lifes =1h
+upload character image = 1h
+upload level background = 1h
+upload ennemies and obstacles = 2h
+player movement right,left, jump ==2h
+inser timer limit for completion = 2h
+score system starts at 0 = 1h
+Items on map that you can pickup =1h
+Ennemies Movement == 2h
+Ennemies contact with player interaction =2h
+Character reset position when dies =2h
+after 3 deaths= Game Over =1h
+Show Highscore to user and Highscore of other players =2h
+If level completed Start new level=1h
+
+
