@@ -13,3 +13,8 @@ Alex == 8 sept
 Figured out how to populate database with images
 TODO: Level design, character creation, scripting,
  AI, obstacle creation, make database for characters and background
+
+Alex == 9sept
+Figured out Canvas and player movement
+TODO: Position objects, key strokes movements, focus on canvas
+PRE-WEEKEND 
