@@ -1,0 +1,19 @@
+Choice of elements is
+' ' - empty
+@ rock
+! diamond
+# wall
+
+
+enum Cell { Empty, Rock, Diamond, Wall }
+
+Cell [,] gameBoard = new Cell[15,20];
+
+
+Assume you have a file with 15 lines and 20 characters in each line
+
+########################################
+#      #       ####  @!@   #############
+#     ###     ####   ###               #
+#    #####   ####       #############  #
+
