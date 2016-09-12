@@ -1,0 +1,16 @@
+﻿<Window x:Class="BTTFGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Canvas  HorizontalAlignment="Left" Height="300" Margin="10,0,0,0" VerticalAlignment="Top" Width="497" Background="Black" Grid.Row="1">
+            <Image x:Name="Player" HorizontalAlignment="Left" Source="c:\users\student\documents\visual studio 2013\Projects\BTTFGame\BTTFGame\Resources\MartyRight.png" Width="47" Height="48" Canvas.Left="35" Canvas.Top="242"/>
+        </Canvas>
+    </Grid>
+</Window>
