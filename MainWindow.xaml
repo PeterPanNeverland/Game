@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid Background="Gray">
-        <Canvas Name="paintCanvas" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Canvas Name="paintCanvas" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" KeyDown="paintCanvas_KeyDown">
 
             <Label Content="Score:" Canvas.Right="216" Canvas.Top="0" Height="25" Canvas.Left="0"/>
             <Label x:Name="score_label" Canvas.Right="205" Canvas.Top="0" Height="25" Canvas.Left="47" Width="41"/>

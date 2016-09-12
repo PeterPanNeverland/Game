@@ -22,10 +22,10 @@ namespace SnakeTest
     public partial class MainWindow : Window
     {
         private Ellipse snake_head { get; set; }
-        private Ellipse apple { get; set; }
+        private Ellipse pepsi { get; set; }
         private Image character { get; set; }
 
-
+       
         private Timer tick { get; set; }
         private Random rnd;
         private Dictionary<int, Ellipse> food { get; set; }
@@ -36,10 +36,7 @@ namespace SnakeTest
         private int tick_counter = 0;
         private int window_width;
         private int window_height;
-
         
-
-       
 
         public MainWindow()
         {
@@ -54,12 +51,12 @@ namespace SnakeTest
             this.window_width = (Int32)this.Width;
             this.KeyDown += new KeyEventHandler(image_KeyDown);
 
-            this.character = new Image();
-            this.character.Width = 16;
-            this.character.Height = 16;
+            this.image = new Image();
+            this.image.Width = 16;
+            this.image.Height = 16;
             
-            Canvas.SetTop(this.character, 10);
-            Canvas.SetLeft(this.character, 10);
+            Canvas.SetTop(this.image, 10);
+            Canvas.SetLeft(this.image, 10);
 
 
             this.tick = new Timer();
@@ -76,25 +73,25 @@ namespace SnakeTest
 
             this.Dispatcher.Invoke((Action)(() =>
             {
-                double top = Canvas.GetTop(this.character);
-                double left = Canvas.GetLeft(this.character);
+                double top = Canvas.GetTop(this.image);
+                double left = Canvas.GetLeft(this.image);
 
                 switch (direction)
                 {
                     case 0:
-                        Canvas.SetTop(character, top - 1 * speed_multiplier);
+                        Canvas.SetTop(image, top - 1 * speed_multiplier);
                         break;
                     case 1:
-                        Canvas.SetTop(character, top + 1 * speed_multiplier);
+                        Canvas.SetTop(image, top + 1 * speed_multiplier);
                         break;
                     case 2:
-                        Canvas.SetLeft(character, left + 1 * speed_multiplier);
+                        Canvas.SetLeft(image, left + 1 * speed_multiplier);
                         break;
                     case 3:
-                        Canvas.SetLeft(character, left - 1 * speed_multiplier);
+                        Canvas.SetLeft(image, left - 1 * speed_multiplier);
                         break;
                     default:
-                        Canvas.SetTop(character, top + 1 * speed_multiplier);
+                        Canvas.SetTop(image, top + 1 * speed_multiplier);
                         break;
                 }
 
@@ -176,14 +173,22 @@ namespace SnakeTest
         }
         private void OnLoad(object sender, RoutedEventArgs e)
         {
-            Keyboard.Focus(character);
+            Keyboard.Focus(image);
         }
         public void MoveCharacter(int x, int y)
         {
             Canvas.SetTop(image, x);
             Canvas.SetLeft(image, y);
         }
-       
-        
+
+        private void paintCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void image_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
     }
 }
