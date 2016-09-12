@@ -12,3 +12,6 @@
 \\mac\home\documents\visual studio 2015\Projects\game\game\obj\Debug\game.csproj.GenerateResource.Cache
 \\mac\home\documents\visual studio 2015\Projects\game\game\obj\Debug\game.exe
 \\mac\home\documents\visual studio 2015\Projects\game\game\obj\Debug\game.pdb
+C:\Users\student\Documents\BTTFGame\Game1\game\game\bin\Debug\game.exe.config
+C:\Users\student\Documents\BTTFGame\Game1\game\game\obj\Debug\game.exe
+C:\Users\student\Documents\BTTFGame\Game1\game\game\obj\Debug\game.pdb
