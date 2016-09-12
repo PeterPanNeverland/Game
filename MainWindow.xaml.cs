@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,75 +14,176 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DKGameProject
+namespace SnakeTest
 {
-    
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Circle> Donkey = new List<Circle>();
-        private Circle food = new Circle();
+        private Ellipse snake_head { get; set; }
+        private Ellipse apple { get; set; }
+        private Image character { get; set; }
+
+
+        private Timer tick { get; set; }
+        private Random rnd;
+        private Dictionary<int, Ellipse> food { get; set; }
+
+        private int direction = 1;
+        private int speed_multiplier = 3;
+        private int time_multiplier = 1;
+        private int tick_counter = 0;
+        private int window_width;
+        private int window_height;
+
+        
+
+       
+
         public MainWindow()
         {
             InitializeComponent();
-            new Settings();
-
-            gameTimer.Interval = 1000 / Settings.Speed;
-            gameTimer.Tick += UpdateScreen;
-            gameTimer.Start();
-
-            StartGame();
-        }
-
-        private void StartGame()
-        {
-            new Settings();
-
-            Donkey.Clear();
-            Circle head = new Circle();
-            head.X = 10;
-            head.Y = 5;
-            Donkey.Add(head);
-
-            lblScore.Text = Settings.Score.ToString();
-            GenerateFood();
-        }
-        private void GenerateFood()
-        {
-            //max width max height of screen
-            int maxPos = pbCanvas.Size.Width / Settings.Width;
-            int maxYPos = pbCanvas.Size.Height / Settings.Height;
-
             
+            this.DataContext = this;
+
+            this.time_multiplier = 10;
+            this.rnd = new Random();
+            this.food = new Dictionary<int, Ellipse>();
+            this.window_height = (Int32)this.Height;
+            this.window_width = (Int32)this.Width;
+            this.KeyDown += new KeyEventHandler(image_KeyDown);
+
+            this.character = new Image();
+            this.character.Width = 16;
+            this.character.Height = 16;
+            
+            Canvas.SetTop(this.character, 10);
+            Canvas.SetLeft(this.character, 10);
+
+
+            this.tick = new Timer();
+            this.tick.Interval = 100 / this.time_multiplier;
+            this.tick.Elapsed += tick_Elapsed;
+            this.tick.Start();
         }
-        private void UpdateScreen(object sender, EventArgs e)
+        
+
+        private void tick_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if(Settings.GameOver == true)
+            this.tick.Stop();
+            this.tick.Interval = 100 / this.time_multiplier;
+
+            this.Dispatcher.Invoke((Action)(() =>
             {
-                if (Input.KeyPressed(Keys.Enter))
+                double top = Canvas.GetTop(this.character);
+                double left = Canvas.GetLeft(this.character);
+
+                switch (direction)
                 {
-                    StartGame();
+                    case 0:
+                        Canvas.SetTop(character, top - 1 * speed_multiplier);
+                        break;
+                    case 1:
+                        Canvas.SetTop(character, top + 1 * speed_multiplier);
+                        break;
+                    case 2:
+                        Canvas.SetLeft(character, left + 1 * speed_multiplier);
+                        break;
+                    case 3:
+                        Canvas.SetLeft(character, left - 1 * speed_multiplier);
+                        break;
+                    default:
+                        Canvas.SetTop(character, top + 1 * speed_multiplier);
+                        break;
                 }
-            }
-            else
-            {
-                if (Input.KeyPressed(Keys.Right) && Settings.direction != Direction.Left)
-                {
-                    Settings.direction = Direction.Right;
-                }
-                else if (Input.KeyPressed(Keys.Left) && Settings.direction != Direction.Right) {
-                    Settings.direction = Direction.Left;
-                }
-                else if(Input.KeyPressed(Keys.Up)&& Settings.direction != Direction.Down)
-                {
-                    Settings.direction = Direction.Up;
-                }
-                else if (Input.KeyPressed(Keys.Down) && Settings.direction != Direction.Up)
-                {
-                    Settings.direction = Direction.Down;
-                }
-                MovePlayer();
-            }
-            pbCanvas.Invalidate();
+
+                this.tick_counter++;
+
+                if (this.CheckCollision())
+                    this.AteAPepsi();
+
+
+                this.tick.Start();
+            }));
         }
+        private void AteAPepsi()
+        {
+            //add pts to score
+        }
+        
+
+        private bool CheckCollision()
+        {
+            int i = 0;
+            foreach (Ellipse apple in this.food.Values)
+            {
+                if (MainWindow.CheckCollision(apple, this.snake_head))
+                {
+                    this.paintCanvas.Children.Remove(apple);
+                    this.food.Remove(i);
+                    return true;
+                }
+                i++;
+            }
+            return false;
+        }
+
+        public static bool CheckCollision(Ellipse e1, Ellipse e2)
+        {
+            var r1 = e1.ActualWidth / 2;
+            var x1 = Canvas.GetLeft(e1) + r1;
+            var y1 = Canvas.GetTop(e1) + r1;
+            var r2 = e2.ActualWidth / 2;
+            var x2 = Canvas.GetLeft(e2) + r2;
+            var y2 = Canvas.GetTop(e2) + r2;
+            var d = new Vector(x2 - x1, y2 - y1);
+            return d.Length <= r1 + r2;
+        }
+
+        
+        
+
+        private void image_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.IsDown)
+            {
+                switch (e.Key)
+                {
+                    case Key.W:
+                        direction = 0;
+                        break;
+                    case Key.S:
+                        direction = 1;
+                        break;
+                    case Key.D:
+                        direction = 2;
+                        break;
+                    case Key.A:
+                        direction = 3;
+                        break;
+                    default:
+                        direction = 1;
+                        break;
+                }
+            }
+        }
+
+        private void image_KeyUp(object sender, KeyEventArgs e)
+        {
+
+
+        }
+        private void OnLoad(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(character);
+        }
+        public void MoveCharacter(int x, int y)
+        {
+            Canvas.SetTop(image, x);
+            Canvas.SetLeft(image, y);
+        }
+       
+        
     }
 }
