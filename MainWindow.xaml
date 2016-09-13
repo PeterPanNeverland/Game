@@ -5,16 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid Background="Gray">
-        <Canvas Name="paintCanvas" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" KeyDown="paintCanvas_KeyDown">
+        Title="MainWindow" Height="900" Width="1600">
+    <Grid Background="Gray" RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="-0.014"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.RenderTransform>
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Canvas Name="paintCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" KeyDown="paintCanvas_KeyDown">
+            <Canvas.Background>
+                <ImageBrush ImageSource="C:\Users\AlexL\OneDrive\Documents\GameProject\SnakeTest\SnakeTest\Images\background.png">
 
+                </ImageBrush>
+            </Canvas.Background>
             <Label Content="Score:" Canvas.Right="216" Canvas.Top="0" Height="25" Canvas.Left="0"/>
             <Label x:Name="score_label" Canvas.Right="205" Canvas.Top="0" Height="25" Canvas.Left="47" Width="41"/>
 
             <Label Content="Level:" Canvas.Right="16" Canvas.Top="0" Height="25" Canvas.Left="424"/>
             <Label x:Name="level_label" Canvas.Right="5" Canvas.Top="0" Height="25" Canvas.Left="468" Width="44"/>
-            <Image x:Name="image" Loaded="OnLoad" Height="33" Width="39" Source="C:\Users\AlexL\OneDrive\Documents\GameProject\SnakeTest\SnakeTest\Images\MartyRight.png" RenderTransformOrigin="0.628,0.5" KeyDown="image_KeyDown" KeyUp="image_KeyUp" Canvas.Left="232" Canvas.Top="252"/>
+            <Image x:Name="image" Loaded="OnLoad" Source="C:\Users\AlexL\OneDrive\Documents\GameProject\SnakeTest\SnakeTest\Images\MartyRight.png" KeyDown="image_KeyDown" KeyUp="image_KeyUp" Canvas.Left="10" Canvas.Top="768"/>
         </Canvas>
     </Grid>
 </Window>

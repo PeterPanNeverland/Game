@@ -22,41 +22,38 @@ namespace SnakeTest
     public partial class MainWindow : Window
     {
         private Ellipse snake_head { get; set; }
-        private Ellipse pepsi { get; set; }
+        private Image pepsi { get; set; }
         private Image character { get; set; }
 
-       
+
         private Timer tick { get; set; }
         private Random rnd;
-        private Dictionary<int, Ellipse> food { get; set; }
 
-        private int direction = 1;
+        private int direction = 5;
         private int speed_multiplier = 3;
         private int time_multiplier = 1;
         private int tick_counter = 0;
         private int window_width;
         private int window_height;
-        
+
 
         public MainWindow()
         {
             InitializeComponent();
-            
+
             this.DataContext = this;
 
             this.time_multiplier = 10;
             this.rnd = new Random();
-            this.food = new Dictionary<int, Ellipse>();
+            Image pepsi = new Image();
             this.window_height = (Int32)this.Height;
             this.window_width = (Int32)this.Width;
             this.KeyDown += new KeyEventHandler(image_KeyDown);
 
-            this.image = new Image();
-            this.image.Width = 16;
-            this.image.Height = 16;
+            Image character = new Image();
+            character.Width = 16;
+            character.Height = 16;
             
-            Canvas.SetTop(this.image, 10);
-            Canvas.SetLeft(this.image, 10);
 
 
             this.tick = new Timer();
@@ -64,7 +61,7 @@ namespace SnakeTest
             this.tick.Elapsed += tick_Elapsed;
             this.tick.Start();
         }
-        
+
 
         private void tick_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -91,15 +88,16 @@ namespace SnakeTest
                         Canvas.SetLeft(image, left - 1 * speed_multiplier);
                         break;
                     default:
-                        Canvas.SetTop(image, top + 1 * speed_multiplier);
+                        Canvas.SetTop(image, top + 0 * speed_multiplier);
                         break;
                 }
 
-                this.tick_counter++;
 
+                this.tick_counter++;
+                /*
                 if (this.CheckCollision())
                     this.AteAPepsi();
-
+                    */
 
                 this.tick.Start();
             }));
@@ -108,25 +106,24 @@ namespace SnakeTest
         {
             //add pts to score
         }
-        
 
+        /*
         private bool CheckCollision()
         {
             int i = 0;
-            foreach (Ellipse apple in this.food.Values)
+            foreach (Image pepsi in )
             {
-                if (MainWindow.CheckCollision(apple, this.snake_head))
+                if (MainWindow.CheckCollision(pepsi, character))
                 {
-                    this.paintCanvas.Children.Remove(apple);
-                    this.food.Remove(i);
+                    this.paintCanvas.Children.Remove(pepsi);
                     return true;
                 }
                 i++;
             }
             return false;
         }
-
-        public static bool CheckCollision(Ellipse e1, Ellipse e2)
+        */
+        public static bool CheckCollision(Image e1, Image e2)
         {
             var r1 = e1.ActualWidth / 2;
             var x1 = Canvas.GetLeft(e1) + r1;
@@ -138,37 +135,35 @@ namespace SnakeTest
             return d.Length <= r1 + r2;
         }
 
-        
-        
+
+
 
         private void image_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.IsDown)
+
+            switch (e.Key)
             {
-                switch (e.Key)
-                {
-                    case Key.W:
-                        direction = 0;
-                        break;
-                    case Key.S:
-                        direction = 1;
-                        break;
-                    case Key.D:
-                        direction = 2;
-                        break;
-                    case Key.A:
-                        direction = 3;
-                        break;
-                    default:
-                        direction = 1;
-                        break;
-                }
+                case Key.W:
+                    direction = 0;
+                    break;
+                case Key.S:
+                    direction = 1;
+                    break;
+                case Key.D:
+                    direction = 2;
+                    break;
+                case Key.A:
+                    direction = 3;
+                    break;
+                default:
+                    direction = 1;
+                    break;
             }
         }
+    
 
         private void image_KeyUp(object sender, KeyEventArgs e)
         {
-
 
         }
         private void OnLoad(object sender, RoutedEventArgs e)
